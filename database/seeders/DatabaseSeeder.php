@@ -15,6 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::firstOrCreate(
+            ['email' => 'admin@email.com'],
+            [
+                'name' => 'Admin',
+                'password' => bcrypt('123123'),
+                'is_admin' => true,
+            ]
+        );
+
         $this->call([
             CategorySeeder::class,
             ProductSeeder::class,

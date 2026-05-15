@@ -18,6 +18,10 @@ Alpine.store('toast', {
     }
 });
 
+Alpine.store('cart', {
+    count: window.__CART_COUNT__ ?? 0,
+});
+
 // 장바구니 담기
 window.addToCart = async function(productId, qty) {
     const res = await fetch('/cart', {
@@ -32,6 +36,7 @@ window.addToCart = async function(productId, qty) {
 
     if (res.ok) {
         const data = await res.json();
+        Alpine.store('cart').count += qty;
         Alpine.store('toast').show(data.message);
     } else {
         const data = await res.json();

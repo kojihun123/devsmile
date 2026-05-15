@@ -44,5 +44,9 @@
             <span x-text="$store.toast.message"></span>
         </div>
 
+        <script>
+            window.__CART_COUNT__ = {{ $cartCount ?? 0 }};
+        </script>
+
     </body>
 </html>

@@ -13,8 +13,11 @@
             <div class="flex items-center gap-4">
 
                 {{-- 장바구니 --}}
-                <a href="{{ route('cart.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
-                    장바구니
+                <a x-data href="{{ route('cart.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
+                    장바구니<span x-show="$store.cart.count > 0"
+                          x-text="' (' + $store.cart.count + ')'"
+                          class="text-red-500 font-medium"
+                          style="display: none;"></span>
                 </a>
 
                 @auth

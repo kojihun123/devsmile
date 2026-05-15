@@ -89,6 +89,13 @@
             if (res.ok) {
                 const json = await res.json();
                 window.dispatchEvent(new CustomEvent('cart-updated', { detail: { total: json.total } }));
+
+                if (action === 'increase') {
+                    Alpine.store('cart').count++;
+                } else {
+                    Alpine.store('cart').count--;
+                }
+                
             } else {
                 Alpine.store('toast').show('수량 변경에 실패했습니다.', 'error');
             }
