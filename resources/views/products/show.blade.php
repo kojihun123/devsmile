@@ -42,14 +42,15 @@
                 </p>
 
                 {{-- 수량 + 담기 --}}
-                <div class="flex items-center gap-3">
+                <div x-data="{ quantity : 1 }" class="flex items-center gap-3">
                     <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
-                        <button class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition">−</button>
-                        <span class="px-4 py-2 text-sm font-medium">1</span>
-                        <button class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition">+</button>
+                        <button @click="quantity = Math.max(1, quantity - 1)" class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition">−</button>
+                        <span x-text="quantity" class="px-4 py-2 text-sm font-medium"></span>
+                        <button @click="quantity = Math.min({{ $product->stock }}, quantity + 1)" class="px-3 py-2 text-gray-600 hover:bg-gray-100 transition">+</button>
                     </div>
 
                     <button
+                        @click="addToCart({{ $product->id }}, quantity)"
                         @if($product->stock === 0) disabled @endif
                         class="flex-1 bg-gray-900 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition
                                disabled:bg-gray-300 disabled:cursor-not-allowed">

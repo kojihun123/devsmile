@@ -60,7 +60,7 @@
                         <div class="px-4 pb-4">
                             <button
                                 class="w-full text-sm bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-700 transition"
-                                onclick="addToCart({{ $product->id }})"
+                                onclick="addToCart({{ $product->id }}, 1)"
                             >
                                 장바구니 담기
                             </button>
@@ -72,26 +72,4 @@
         @endif
 
     </div>
-
-    <script>
-        async function addToCart(productId) {
-            const res = await fetch('/cart', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({ product_id: productId, quantity: 1 })
-            });
-    
-            if (res.ok) {
-                const data = await res.json();
-                Alpine.store('toast').show(data.message);
-            } else {
-                Alpine.store('toast').show('오류가 발생했습니다.', 'error');
-            }
-
-        }
-    </script>
 </x-app-layout>

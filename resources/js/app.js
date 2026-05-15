@@ -18,4 +18,25 @@ Alpine.store('toast', {
     }
 });
 
+// 장바구니 담기
+window.addToCart = async function(productId, qty) {
+    const res = await fetch('/cart', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({ product_id: productId, quantity: qty })
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        Alpine.store('toast').show(data.message);
+    } else {
+        const data = await res.json();
+        Alpine.store('toast').show(data.message || '오류가 발생했습니다.', 'error');
+    }
+}
+
 Alpine.start();
