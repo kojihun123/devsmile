@@ -25,7 +25,7 @@ class SendOrderConfirmedMail implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->order->guest_email)
+        Mail::to($this->order->recipientEmail())
             ->send(new OrderConfirmed($this->order));
     }
 }

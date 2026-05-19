@@ -24,6 +24,6 @@ class SendOrderDeliveredMail implements ShouldQueue
 
         $order->update(['status' => 'delivered']);
 
-        Mail::to($order->guest_email)->send(new OrderDelivered($order));
+        Mail::to($order->recipientEmail())->send(new OrderDelivered($order));
     }
 }

@@ -33,6 +33,6 @@ class SendOrderShippingMail implements ShouldQueue
 
         $order->update(['status' => 'shipping']);
 
-        Mail::to($order->guest_email)->send(new OrderShipping($order));
+        Mail::to($order->recipientEmail())->send(new OrderShipping($order));
     }
 }

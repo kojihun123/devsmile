@@ -19,6 +19,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function recipientEmail(): ?string
+    {
+        return $this->guest_email ?? $this->user?->email;
+    }
+
     public function items()
     {
         return $this->hasMany(OrderItem::class);
