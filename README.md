@@ -128,6 +128,36 @@ certbot  - Let's Encrypt 인증서 자동 갱신 (12시간마다)
 
 ---
 
+## CI/CD (GitHub Actions)
+
+`main` 브랜치에 push 하면 서버에 자동 배포돼요.
+
+### 설정 방법 (최초 1회)
+
+**1. 서버에서 배포용 SSH 키 생성**
+
+```bash
+ssh-keygen -t ed25519 -C "github-actions" -f ~/.ssh/github_actions -N ""
+cat ~/.ssh/github_actions.pub >> ~/.ssh/authorized_keys
+sudo chmod -R 755 docker/certbot/  # 빌드 컨텍스트 권한
+```
+
+**2. GitHub Secret 등록**
+
+GitHub 레포 → Settings → Secrets and variables → Actions → New repository secret
+
+| Name | Value |
+|------|-------|
+| `SSH_HOST` | 서버 IP |
+| `SSH_USERNAME` | `ubuntu` |
+| `SSH_PRIVATE_KEY` | `cat ~/.ssh/github_actions` 출력값 전체 |
+
+**3. 완료**
+
+이후 `git push` 하면 자동으로 배포돼요.
+
+---
+
 ## 환경변수
 
 | 변수 | 설명 |
