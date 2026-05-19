@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
+use App\Http\Services\CartService;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public function __construct(private CartService $cartService) {}
+
     public function index()
     {
-        $cart = $this->getCart();
+        $cart = $this->cartService->getCart();
         $items = $cart ? $cart->items()->with('product')->get() : collect();
         $total = $items->sum(fn($item) => $item->product->price * $item->quantity);
 
@@ -30,7 +32,7 @@ class CartController extends Controller
         $quantity = $request->input('quantity');
 
         $product = Product::find($productId);
-        $cart = $this->getOrCreateCart();
+        $cart = $this->cartService->getOrCreateCart();
         $cartItem = $cart->items()->where('product_id', $productId)->first();
 
         $currentQuantity = $cartItem ? $cartItem->quantity : 0;
@@ -93,23 +95,5 @@ class CartController extends Controller
         $cartItem->delete();
 
         return redirect()->route('cart.index');
-    }
-
-    private function getCart(): ?Cart
-    {
-        if (Auth::check()) {
-            return Cart::where('user_id', Auth::id())->first();
-        }
-
-        return Cart::where('session_id', session()->getId())->first();
-    }
-
-    private function getOrCreateCart(): Cart
-    {
-        if (Auth::check()) {
-            return Cart::firstOrCreate(['user_id' => Auth::id()]);
-        }
-
-        return Cart::firstOrCreate(['session_id' => session()->getId()]);
     }
 }

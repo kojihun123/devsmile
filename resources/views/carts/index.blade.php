@@ -66,7 +66,7 @@
                     <span class="text-xl font-bold text-gray-900"
                           x-text="total.toLocaleString('ko-KR') + '원'"></span>
                 </div>
-                <a href="#" class="block w-full text-center bg-gray-900 text-white py-3 rounded-lg font-medium hover:bg-gray-700 transition">
+                <a href="{{ route('orders.create') }}" class="block w-full text-center bg-gray-900 text-white py-3 rounded-lg font-medium hover:bg-gray-700 transition">
                     주문하기
                 </a>
             </div>
