@@ -2,16 +2,43 @@
 
 ## 사전 준비
 
-- Lightsail Ubuntu 24.04 인스턴스 (2GB RAM 이상)
+- **AWS Lightsail** Ubuntu 24.04 인스턴스 (2GB RAM / $10 플랜 이상)
 - Lightsail 방화벽에서 **80, 443 포트** 오픈
-- SSH 접속 가능한 상태
+- SSH 키 파일 (`.pem`) 다운로드 완료
+
+---
+
+## AWS Lightsail 인스턴스 생성
+
+1. Lightsail 콘솔 → **Create instance**
+2. Region: **Seoul (ap-northeast-2)**
+3. Blueprint: **OS Only → Ubuntu 24.04 LTS**
+4. Networking type: **Dual-stack**
+5. Plan: **$10 (2GB RAM)**
+6. 인스턴스 이름 입력 후 생성
+
+### 방화벽 설정
+
+인스턴스 → **Networking** 탭 → **Firewall** → **Add rule**
+
+| Port | Protocol |
+|------|----------|
+| 80   | TCP |
+| 443  | TCP |
 
 ---
 
 ## 1. SSH 접속
 
+**Windows CMD:**
 ```cmd
 ssh -i C:\Users\{유저명}\Downloads\{키파일}.pem ubuntu@{서버IP}
+```
+
+**WSL / Linux / Mac:**
+```bash
+chmod 400 {키파일}.pem
+ssh -i {키파일}.pem ubuntu@{서버IP}
 ```
 
 ---
@@ -21,7 +48,7 @@ ssh -i C:\Users\{유저명}\Downloads\{키파일}.pem ubuntu@{서버IP}
 ```bash
 curl -fsSL https://get.docker.com | sh
 sudo usermod -aG docker ubuntu && newgrp docker
-docker --version  # 버전 확인
+docker --version
 ```
 
 ---
@@ -35,19 +62,13 @@ cd devsmile
 
 ---
 
-## 4. nginx 설정에 IP 주입
-
-```bash
-sed -i 's/YOUR_DOMAIN/{서버IP}/g' docker/nginx/prod.conf
-```
-
-그리고 `prod.conf` 에서 **HTTPS 블록 전체 삭제** (SSL 인증서 없으니까)
+## 4. nginx 설정 (IP 기반 HTTP 전용)
 
 ```bash
 nano docker/nginx/prod.conf
 ```
 
-아래처럼 HTTP 블록만 남기기:
+전체 내용을 아래로 교체:
 
 ```nginx
 server {
@@ -91,12 +112,10 @@ cp .env.example .env
 nano .env
 ```
 
-수정할 항목:
-
 | 항목 | 값 |
 |------|-----|
 | `APP_URL` | `http://{서버IP}` |
-| `APP_DEBUG` | `true` (초기 디버깅용, 나중에 false로) |
+| `APP_DEBUG` | `true` (초기 디버깅용) |
 | `DB_PASSWORD` | 원하는 비밀번호 |
 | `TOSS_CLIENT_KEY` | 토스 클라이언트 키 |
 | `TOSS_SECRET_KEY` | 토스 시크릿 키 |
@@ -110,10 +129,7 @@ nano .env
 ## 6. APP_KEY 생성
 
 ```bash
-# composer 의존성 설치
 docker run --rm -v $(pwd):/app -w /app composer:2 composer install --no-dev --optimize-autoloader
-
-# APP_KEY 생성 (.env에 자동으로 채워짐)
 docker run --rm -v $(pwd):/app -w /app php:8.4-cli php artisan key:generate
 ```
 
@@ -133,7 +149,7 @@ mkdir -p public/storage storage/app/public docker/certbot/www docker/certbot/con
 docker compose -f docker-compose.prod.yml build
 ```
 
-> 시간이 좀 걸립니다 (5~10분)
+> 5~10분 소요
 
 ---
 
@@ -153,7 +169,7 @@ docker compose -f docker-compose.prod.yml ps
 
 ## 10. public/build 동기화 (CSS/JS)
 
-이미지 안에서 빌드된 assets을 호스트로 복사:
+Dockerfile 안에서 Vite 빌드가 돌기 때문에 이미지 안의 빌드 결과물을 호스트로 복사해야 nginx가 올바른 CSS/JS를 서빙할 수 있음:
 
 ```bash
 docker cp devsmile-app-1:/var/www/html/public/build ./public/
@@ -223,6 +239,6 @@ docker compose -f docker-compose.prod.yml restart app
 # 전체 종료
 docker compose -f docker-compose.prod.yml down
 
-# 전체 종료 + 볼륨 삭제 (DB 초기화)
+# 전체 종료 + DB 초기화
 docker compose -f docker-compose.prod.yml down -v
 ```
