@@ -13,7 +13,7 @@
         {{-- 페이지 타이틀 --}}
         <div class="mb-8">
             <h1 class="text-2xl font-bold text-gray-900">전체 상품</h1>
-            <p class="text-sm text-gray-500 mt-1">개발자 감성 굿즈를 만나보세요</p>
+            <p class="text-sm text-gray-500 mt-1">귀여운 고양이들 보고가세요</p>
         </div>
 
         {{-- 카테고리 필터 --}}
