@@ -16,7 +16,7 @@ echo "      완료"
 
 # ── 2. 이미지 재빌드 ──────────────────────────────────────────────────────────
 echo "[2/5] Docker 이미지 빌드 중..."
-$COMPOSE build app queue
+$COMPOSE build app queue scheduler
 echo "      완료"
 
 # ── 3. public/build 동기화 ────────────────────────────────────────────────────
