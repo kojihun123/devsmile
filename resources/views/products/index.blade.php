@@ -1,6 +1,15 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
+        {{-- 포트폴리오 안내 배너 --}}
+        <div class="bg-gray-50 border border-gray-200 rounded-xl px-5 py-4 mb-8 flex items-start gap-3">
+            <span class="text-lg">🛠️</span>
+            <div>
+                <p class="text-sm font-semibold text-gray-700">포트폴리오 데모 사이트입니다</p>
+                <p class="text-xs text-gray-500 mt-0.5">토스페이먼츠 테스트 환경으로 운영되어 실제 결제가 발생하지 않습니다. 구매 완료 시 상품은 이메일로 배달됩니다.</p>
+            </div>
+        </div>
+
         {{-- 페이지 타이틀 --}}
         <div class="mb-8">
             <h1 class="text-2xl font-bold text-gray-900">전체 상품</h1>

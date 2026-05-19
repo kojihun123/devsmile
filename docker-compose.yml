@@ -60,6 +60,19 @@ services:
     networks:
       - devsmile
 
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: "1000:1000"
+    volumes:
+      - .:/var/www/html
+    command: php artisan queue:work redis --sleep=3 --tries=3
+    depends_on:
+      - redis
+    networks:
+      - devsmile      
+
 volumes:
   mysql_data:
   redis_data:

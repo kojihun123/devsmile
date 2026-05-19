@@ -21,10 +21,11 @@
                 </a>
 
                 @auth
+                    <a href="{{ route('orders.index') }}" class="text-sm text-gray-600 hover:text-gray-900">내 주문</a>
                     <span class="text-sm text-gray-600">{{ Auth::user()->name }}</span>
 
                     @if(Auth::user()->is_admin)
-                        <a href="#" class="text-sm text-gray-600 hover:text-gray-900">관리자</a>
+                        <a href="{{ route('admin.dashboard') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">관리자</a>
                     @endif
 
                     <form method="POST" action="{{ route('logout') }}">
@@ -34,6 +35,7 @@
                         </button>
                     </form>
                 @else
+                    <a href="{{ route('orders.lookup') }}" class="text-sm text-gray-600 hover:text-gray-900">주문 조회</a>
                     <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900">로그인</a>
                     <a href="{{ route('register') }}" class="text-sm bg-gray-900 text-white px-3 py-1.5 rounded hover:bg-gray-700">회원가입</a>
                 @endauth

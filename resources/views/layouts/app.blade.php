@@ -48,5 +48,12 @@
             window.__CART_COUNT__ = {{ $cartCount ?? 0 }};
         </script>
 
+        @if (session('error'))
+            <script>
+                document.addEventListener('alpine:init', () => {
+                    Alpine.store('toast').show("{{ session('error') }}", 'error');
+                });
+            </script>
+        @endif
     </body>
 </html>

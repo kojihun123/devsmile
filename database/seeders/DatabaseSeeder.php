@@ -20,13 +20,14 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'password' => bcrypt('123123'),
+                'phone' => '010-6313-9077',
                 'is_admin' => true,
             ]
         );
 
-        $this->call([
-            CategorySeeder::class,
-            ProductSeeder::class,
-        ]);
+        // $this->call([
+        //     CategorySeeder::class,
+        //     ProductSeeder::class,
+        // ]);
     }
 }
