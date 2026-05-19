@@ -110,10 +110,17 @@ docker run --rm -v $(pwd):/app -w /app php:8.4-cli php artisan key:generate
 
 ---
 
-## 6. 필요한 디렉터리 생성
+## 6. 필요한 디렉터리 생성 + 권한 설정
 
 ```bash
 mkdir -p public/storage storage/app/public docker/certbot/www docker/certbot/conf
+```
+
+> **중요**: certbot 디렉터리 권한을 반드시 설정해야 해요.
+> 없으면 GitHub Actions에서 Docker 빌드 시 `permission denied` 에러 발생
+
+```bash
+sudo chmod -R 755 docker/certbot/
 ```
 
 ---
@@ -191,8 +198,14 @@ docker compose -f docker-compose.prod.yml exec app php artisan migrate --seed
 ## 12. 권한 설정
 
 ```bash
+# PHP가 storage에 쓸 수 있도록
 docker compose -f docker-compose.prod.yml exec app chown -R www-data:www-data storage bootstrap/cache
+
+# nginx가 CSS/JS 파일을 읽을 수 있도록
 chmod -R 755 public/build/
+
+# GitHub Actions가 Docker 빌드 컨텍스트에 접근할 수 있도록
+sudo chmod -R 755 docker/certbot/
 ```
 
 ---
