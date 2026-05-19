@@ -25,6 +25,7 @@ services:
       - .env
     environment:
       - APP_ENV=production
+      - TZ=Asia/Seoul
     depends_on:
       - mysql
       - redis
@@ -42,6 +43,7 @@ services:
       - .env
     environment:
       - APP_ENV=production
+      - TZ=Asia/Seoul
     depends_on:
       - redis
     networks:
