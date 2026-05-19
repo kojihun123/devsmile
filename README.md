@@ -2,7 +2,7 @@
 
 Laravel 12 기반 쇼핑몰 포트폴리오 프로젝트
 
-**라이브 데모**: https://devsmile.org | **[아키텍처 & ERD](docs/ARCHITECTURE.md)**
+**라이브 데모**: https://devsmile.org
 
 > 토스페이먼츠 테스트 환경으로 실제 결제가 발생하지 않습니다.
 
