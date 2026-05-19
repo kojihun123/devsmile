@@ -48,6 +48,25 @@ services:
       - redis
     networks:
       - devsmile
+      
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./storage:/var/www/html/storage
+    command: php artisan schedule:work
+    env_file:
+      - .env
+    environment:
+      - APP_ENV=production
+      - TZ=Asia/Seoul
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - devsmile
+
 
   mysql:
     image: mysql:8.0
