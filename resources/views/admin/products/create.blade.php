@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
+        <a href="{{ route('admin.products.index') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-4 inline-block">← 상품 관리</a>
         <h1 class="text-2xl font-bold text-gray-900 mb-8">상품 등록</h1>
 
         <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data"

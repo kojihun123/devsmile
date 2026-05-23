@@ -22,7 +22,7 @@
 
                 @auth
                     <a href="{{ route('orders.index') }}" class="text-sm text-gray-600 hover:text-gray-900">내 주문</a>
-                    <span class="text-sm text-gray-600">{{ Auth::user()->name }}</span>
+                    <a href="{{ route('profile.edit') }}" class="text-sm text-gray-600 hover:text-gray-900 underline">{{ Auth::user()->name }}</a>
 
                     @if(Auth::user()->is_admin)
                         <a href="{{ route('admin.dashboard') }}" class="text-sm text-blue-600 hover:text-blue-800 font-medium">관리자</a>

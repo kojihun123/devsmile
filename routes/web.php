@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // 홈 + 상품 목록
@@ -35,6 +38,9 @@ Route::post('/confirm', [PaymentController::class, 'confirm'])->name('payment.co
 Route::middleware('auth')->group(function () {
     Route::get('/my-orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/my-orders/{order}', [OrderController::class, 'detail'])->name('orders.detail');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // 주문 조회 - 비회원
@@ -50,6 +56,7 @@ Route::prefix('admin')
         Route::resource('categories', AdminCategoryController::class)->except(['show']);
         Route::resource('products', AdminProductController::class);
         Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update']);
+        Route::resource('users', UserController::class);
     });
 
 require __DIR__.'/auth.php';

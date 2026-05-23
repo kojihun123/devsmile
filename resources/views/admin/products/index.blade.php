@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
+        <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-4 inline-block">← 대시보드</a>
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">상품 관리</h1>
             <a href="{{ route('admin.products.create') }}"

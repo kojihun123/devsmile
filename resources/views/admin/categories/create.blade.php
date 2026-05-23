@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
+        <a href="{{ route('admin.categories.index') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-4 inline-block">← 카테고리 관리</a>
         <h1 class="text-2xl font-bold text-gray-900 mb-8">카테고리 등록</h1>
 
         <form method="POST" action="{{ route('admin.categories.store') }}"

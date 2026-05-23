@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
+        <a href="{{ route('admin.dashboard') }}" class="text-sm text-gray-400 hover:text-gray-600 mb-4 inline-block">← 대시보드</a>
         <h1 class="text-2xl font-bold text-gray-900 mb-6">주문 관리</h1>
 
         <form method="GET" class="flex gap-2 mb-4">
