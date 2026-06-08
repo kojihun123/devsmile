@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendOrderConfirmedMail;
 use App\Jobs\SendOrderDeliveredMail;
-use App\Jobs\SendOrderShippingMail;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -74,8 +73,7 @@ class PaymentController extends Controller
             });
         
             SendOrderConfirmedMail::dispatch($order);
-            SendOrderShippingMail::dispatch($order)->delay(now()->addMinutes(5));
-            SendOrderDeliveredMail::dispatch($order)->delay(now()->addMinutes(10));
+            SendOrderDeliveredMail::dispatch($order)->delay(now()->addSeconds(30));
 
         } catch (\RuntimeException $e) {
             Http::withBasicAuth(config('services.toss.secret_key'), '')

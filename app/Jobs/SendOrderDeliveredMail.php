@@ -18,7 +18,7 @@ class SendOrderDeliveredMail implements ShouldQueue
     {
         $order = $this->order->fresh();
 
-        if ($order->status !== 'shipping') {
+        if ($order->status !== 'paid') {
             return;
         }
 

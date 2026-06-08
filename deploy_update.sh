@@ -25,7 +25,6 @@ $COMPOSE up -d app
 sleep 5
 docker cp devsmile-app-1:/var/www/html/public/build ./public/
 chmod -R 755 public/build/
-sudo chmod -R 755 docker/certbot/
 echo "      완료"
 
 # ── 4. 서비스 재시작 ──────────────────────────────────────────────────────────
