@@ -48,6 +48,7 @@ sleep 10
 
 # ── 6. 마이그레이션 + 권한 + 캐시 ────────────────────────────────────────────
 echo "[6/6] 마이그레이션 + 권한 + 캐시..."
+$COMPOSE exec app php artisan key:generate --force
 $COMPOSE exec app php artisan migrate --seed --force
 $COMPOSE exec app chown -R www-data:www-data storage bootstrap/cache
 $COMPOSE exec app php artisan optimize
